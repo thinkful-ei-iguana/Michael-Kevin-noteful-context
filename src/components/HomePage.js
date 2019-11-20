@@ -1,17 +1,21 @@
 import React from "react";
 import Notes from "./Notes";
 import Folders from "./Folders";
+import Context from '../Context';
 
-export default function HomePage(props) {
-  const { folders, notes } = props;
-  return (
-    <div id="wrapper">
-      <section>
-        <Folders folders={folders} folderClick={props.folderClick} />
-      </section>
-      <main>
-        <Notes notes={notes} noteClick={props.noteClick} />
-      </main>
-    </div>
-  );
+export default class HomePage extends React.Component {
+  static contextType = Context;
+
+  render() {
+    return (
+      <div id="wrapper">
+       <section>
+          <Folders />
+        </section>
+        <main>
+          <Notes />
+        </main>
+      </div>
+    );
+  }
 }

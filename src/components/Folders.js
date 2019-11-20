@@ -1,20 +1,23 @@
 import React from "react";
 import Folder from "./Folder";
+import Context from "../Context";
 
-export default function Folders(props) {
-  return (
-    <div className="Folders">
-      {props.folders.map(folder => {
-        return (
-          <Folder
-            key={folder.id}
-            id={folder.id}
-            name={folder.name}
-            folderClick={props.folderClick}
-          />
-        );
-      })}
-      <button>Add new folder</button>
-    </div>
-  );
+export default class Folders extends React.Component {
+  static contextType=Context;
+  render() {
+    return (
+      <div className="Folders">
+        {this.context.folders.map(folder => {
+          return (
+            <Folder
+              key={folder.id}
+              id={folder.id}
+              name={folder.name}
+            />
+          );
+        })}
+        <button>Add new folder</button>
+      </div>
+    );
+  }
 }
