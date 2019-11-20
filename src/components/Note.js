@@ -14,13 +14,13 @@ export default class Note extends React.Component {
           <h3 id={this.props.id}>{this.props.name}</h3>
           <p>{readableDate}</p>
           <button
-            path="/"
             id={this.props.id}
             onClick={event => {
               event.preventDefault();
               event.stopPropagation();
               console.log(event.target.id);
               this.context.delete(event.target.id);
+              this.props.history.push("/");
             }}
           >
             Delete

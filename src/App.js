@@ -6,7 +6,6 @@ import FolderView from "./components/FolderView";
 import { Route, Switch, Link } from "react-router-dom";
 import Context from "./Context";
 import "./App.css";
-import { EventEmitter } from "events";
 
 export class App extends Component {
   constructor(props) {
@@ -15,7 +14,8 @@ export class App extends Component {
       folders: [],
       notes: [],
       baseFolders: "http://localhost:9090/folders",
-      baseNotes: "http://localhost:9090/notes"
+      baseNotes: "http://localhost:9090/notes",
+      noteId: ""
     };
   }
 
@@ -61,11 +61,11 @@ export class App extends Component {
   }
 
   delete = noteId => {
-    console.log("noteId:", noteId);
     let newUrl = `http://localhost:9090/notes/${noteId}`;
     let newNotes = this.state.notes.filter(note => note.id !== noteId);
     this.fetchNotes(`${newUrl}`, { method: "DELETE" }).then(() => {
       this.setState({
+        noteId: noteId,
         notes: newNotes
       });
     });
