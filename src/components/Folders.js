@@ -5,11 +5,6 @@ import Context from "../Context";
 export default class Folders extends React.Component {
   static contextType = Context;
   render() {
-    // console.log(this.props);
-    // const folderId = this.props.match.params.folderId;
-    // const newNotes = this.context.notes.filter(
-    //   note => note.folderId === folderId
-    // );
     return (
       <div className="Folders">
         {this.context.folders.map(folder => {
