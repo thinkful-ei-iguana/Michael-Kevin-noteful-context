@@ -3,19 +3,15 @@ import Folders from "./Folders";
 import NotFound from "./NotFound";
 import Notes from "./Notes";
 
-export default function FolderView(props) {
-  if (!props.folders) {
-    return <NotFound />;
-  } else {
+export default function FolderView() {
     return (
       <div id="wrapper">
         <section>
-          <Folders folders={props.folders} />
+          <Folders />
         </section>
         <main>
-          <Notes notes={props.notes} />
+          <Notes />
         </main>
       </div>
     );
   }
-}

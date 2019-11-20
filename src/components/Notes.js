@@ -1,10 +1,12 @@
 import React from "react";
 import Note from "./Note";
-import Context from '../Context'
+import Context from '../Context';
 
 export default  class Notes extends React.Component {
   static contextType=Context
-  render() {
+  render(routeProps) {
+    const filteredNotes = this.context.notes.filter(
+      note => note.folderId === routeProps.match.params.folderId)
     return (
       <div>
         {this.context.notes.map(note => {
