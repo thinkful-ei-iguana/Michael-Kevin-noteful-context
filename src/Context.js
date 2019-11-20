@@ -1,9 +1,8 @@
-import React from 'react';
-import Store from './components/dummy-store';
+import React from "react";
 
 const Context = React.createContext({
-    folders: [],
-    notes: []
+  folders: [],
+  notes: []
 });
 
 export default Context;

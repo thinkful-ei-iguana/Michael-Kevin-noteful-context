@@ -1,12 +1,13 @@
 import React from "react";
 import NotFound from "./NotFound";
 import Note from "./Note";
+import Context from "../Context";
 
 export default function NoteView(props) {
   if (!props.notes) {
     return <NotFound />;
   } else {
-    const folderId = props.notes.folderId;
+    const folderId = this.props.match.params.folderId;
     const folderMatch = props.folders.find(folder => folder.id === folderId);
     return (
       <div id="wrapper">
