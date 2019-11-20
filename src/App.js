@@ -6,55 +6,78 @@ import FolderView from "./components/FolderView";
 import { Route, Switch, Link } from "react-router-dom";
 import Context from "./Context";
 import "./App.css";
+import { EventEmitter } from "events";
 
 export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       folders: [],
-      notes: []
+      notes: [],
+      baseFolders: "http://localhost:9090/folders",
+      baseNotes: "http://localhost:9090/notes"
     };
   }
 
+  fetchNotes = function(url, { method }) {
+    return fetch(url, { method })
+      .then(response => {
+        if (!response.ok) {
+          console.log("An error occured");
+          throw new Error("This is a problem");
+        }
+        return response;
+      })
+      .then(response => response.json())
+      .catch(err => {
+        console.log("Handling error", err);
+      });
+  };
+
+  fetchFolders = function(url, { method }) {
+    return fetch(url, { method })
+      .then(response => {
+        if (!response.ok) {
+          console.log("An error occured");
+          throw new Error("This is a problem");
+        }
+        return response;
+      })
+      .then(response => response.json())
+      .catch(err => {
+        console.log("Handling error", err);
+      });
+  };
+
   componentDidMount() {
-    fetch('http://localhost:9090/folders')
-      .then(response => {
-      if (!response.ok) {
-        console.log('An error occured');
-        throw new Error('This is a problem');
-        } return response;
-        })
-      .then(response => response.json())
-      .then(data => {
-        const APIfolders = data;
-        this.setState({folders: APIfolders});
-      })
-      .catch(err => {
-        console.log('Handling error', err);
-      })
-    fetch('http://localhost:9090/notes')
-      .then(response => {
-      if (!response.ok) {
-        console.log('An error occured');
-        throw new Error('This is a problem');
-        } return response;
-        })
-      .then(response => response.json())
-      .then(data => {
-        const APInotes = data;
-        this.setState({notes: APInotes});
-      })
-      .catch(err => {
-        console.log('Handling error', err);
-      })
-    }
+    this.fetchFolders(this.state.baseFolders, { method: "GET" }).then(data => {
+      const APIfolders = data;
+      this.setState({ folders: APIfolders });
+    });
+    this.fetchNotes(this.state.baseNotes, { method: "GET" }).then(data => {
+      const APInotes = data;
+      this.setState({ notes: APInotes });
+    });
+  }
+
+  delete = noteId => {
+    console.log("noteId:", noteId);
+    let newUrl = `http://localhost:9090/notes/${noteId}`;
+    let newNotes = this.state.notes.filter(note => note.id !== noteId);
+    this.fetchNotes(`${newUrl}`, { method: "DELETE" }).then(() => {
+      this.setState({
+        notes: newNotes
+      });
+    });
+  };
 
   render() {
     const contextValue = {
       folders: this.state.folders,
-      notes: this.state.notes
+      notes: this.state.notes,
+      delete: this.delete
     };
-    console.log(this.state)
+
     return (
       <Context.Provider value={contextValue}>
         <div>
