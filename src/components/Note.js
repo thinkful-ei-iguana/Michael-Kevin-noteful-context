@@ -18,7 +18,6 @@ export default class Note extends React.Component {
             onClick={event => {
               event.preventDefault();
               event.stopPropagation();
-              console.log(event.target.id);
               this.context.delete(event.target.id);
               this.props.history.push("/");
             }}
