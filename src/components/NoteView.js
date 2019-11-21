@@ -10,8 +10,7 @@ export default class NoteView extends React.Component {
       return <NotFound />;
     } else {
       const noteId = this.props.match.params.noteId;
-      const noteMatch = this.context.notes.find(note => 
-        note.id === noteId);
+      const noteMatch = this.context.notes.find(note => note.id === noteId);
       return (
         <div id="wrapper">
           <section>
@@ -26,6 +25,17 @@ export default class NoteView extends React.Component {
               id={noteMatch.id}
               history={this.props.history}
             />
+            <button
+              id={noteMatch.id}
+              onClick={event => {
+                event.preventDefault();
+                event.stopPropagation();
+                this.context.delete(event.target.id);
+                this.props.history.push("/");
+              }}
+            >
+              Delete
+            </button>
             <p>{noteMatch.content}</p>
           </main>
         </div>

@@ -18,14 +18,26 @@ export default class Notes extends React.Component {
       <div>
         {filteredNotes.map(note => {
           return (
-            <Note
-              key={note.id}
-              id={note.id}
-              name={note.name}
-              modified={note.modified}
-              history={this.props.history}
-              match={this.props.match}
-            />
+            <div className="note">
+              <Note
+                key={note.id}
+                id={note.id}
+                name={note.name}
+                modified={note.modified}
+                history={this.props.history}
+                match={this.props.match}
+              />
+              <button
+                id={note.id}
+                onClick={event => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  this.context.delete(event.target.id);
+                }}
+              >
+                Delete
+              </button>
+            </div>
           );
         })}
         <button>Add new note</button>
